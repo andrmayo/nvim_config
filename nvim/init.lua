@@ -28,14 +28,30 @@ require("nvim-treesitter").setup()
 
 require("dap-python").setup("python")
 
+-- JSONL validation on file open (non-destructive)
+-- Manual jq commands for JSONL files:
+--   Validate:           :!jq empty %
+--   Pretty-print:       :%!jq '.' (then run :set ft=json to restore highlighting)
+--   Compact format:     :%!jq -c '.'
+--   Format with helper: :JqFormat (formats and restores syntax highlighting)
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*.jsonl", "*.json" },
+  pattern = { "*.jsonl" },
   callback = function()
-    vim.cmd("%!jq '.'")
-    -- Reapply syntax highlighting
-    vim.cmd("set filetype=json")
+    -- Just validate, don't modify the file
+    vim.fn.system("jq empty " .. vim.fn.shellescape(vim.fn.expand("%")))
+    if vim.v.shell_error ~= 0 then
+      vim.notify("Invalid JSONL", vim.log.levels.WARN)
+    end
   end,
 })
+
+-- Helper command to format JSON/JSONL with jq and restore syntax highlighting
+vim.api.nvim_create_user_command("JqFormat", function()
+  vim.cmd("%!jq '.'")
+  -- Force treesitter to re-parse by toggling filetype
+  vim.cmd("set filetype=")
+  vim.cmd("set filetype=json")
+end, {})
 
 -- disable pairwise autocomplete for ' and when working with lisp files
 
