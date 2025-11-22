@@ -13,12 +13,8 @@ imap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '
 smap <silent><expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : '<S-Tab>'
 ]])
 
-require("mason").setup()
-require("mason-lspconfig").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "pyright", "lua_ls", "rust_analyzer", "lemminx" },
-})
-
+-- LazyVim handles Mason and LSP setup automatically via extras
+-- Only manual LSP setup needed for non-standard servers:
 require("lspconfig").elixirls.setup({
   -- Unix
   cmd = { "/opt/elixir-ls/language_server.sh" },
