@@ -20,8 +20,6 @@ require("lspconfig").elixirls.setup({
   cmd = { "/opt/elixir-ls/language_server.sh" },
 })
 
-require("nvim-treesitter").setup()
-
 require("dap-python").setup("python")
 
 -- JSONL validation on file open (non-destructive)
