@@ -60,3 +60,10 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true })
+
+-- Use system taplo if available (Mason's static binary segfaults)
+if vim.fn.executable("/usr/bin/taplo") == 1 then
+  vim.lsp.config("taplo", {
+    cmd = { "/usr/bin/taplo", "lsp", "stdio" },
+  })
+end
