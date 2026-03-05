@@ -85,7 +85,30 @@ return {
     explorer = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
-    picker = { enabled = false },
+    picker = {
+      enabled = false,
+      sources = {
+        explorer = {
+          actions = {
+            open_background = function(picker)
+              local item = picker:current()
+              if item and item.file and not item.dir then
+                local bufnr = vim.fn.bufadd(item.file)
+                vim.fn.bufload(bufnr)
+                vim.bo[bufnr].buflisted = true
+              end
+            end,
+          },
+          win = {
+            list = {
+              keys = {
+                ["<C-b>"] = { "open_background", mode = { "n" } },
+              },
+            },
+          },
+        },
+      },
+    },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true },
