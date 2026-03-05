@@ -57,6 +57,11 @@ vim.api.nvim_create_autocmd("FileType", {
       require("mini.pairs").unmap_buf(0, "i", "'", "'")
       vim.keymap.set("i", "'", "'", { buffer = true })
     end)
+    -- Vlime: use standard LSP-like keybindings
+    vim.keymap.set("n", "K", ":call vlime#plugin#DescribeSymbol(vlime#ui#CurAtom())<cr>",
+      { buffer = true, silent = true, desc = "Describe symbol" })
+    vim.keymap.set("n", "gd", ":call vlime#plugin#FindDefinition(vlime#ui#CurAtom())<cr>",
+      { buffer = true, silent = true, desc = "Go to definition" })
   end,
 })
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true })
