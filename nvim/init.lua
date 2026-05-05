@@ -58,10 +58,18 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.keymap.set("i", "'", "'", { buffer = true })
     end)
     -- Vlime: use standard LSP-like keybindings
-    vim.keymap.set("n", "K", ":call vlime#plugin#DescribeSymbol(vlime#ui#CurAtom())<cr>",
-      { buffer = true, silent = true, desc = "Describe symbol" })
-    vim.keymap.set("n", "gd", ":call vlime#plugin#FindDefinition(vlime#ui#CurAtom())<cr>",
-      { buffer = true, silent = true, desc = "Go to definition" })
+    vim.keymap.set(
+      "n",
+      "K",
+      ":call vlime#plugin#DescribeSymbol(vlime#ui#CurAtom())<cr>",
+      { buffer = true, silent = true, desc = "Describe symbol" }
+    )
+    vim.keymap.set(
+      "n",
+      "gd",
+      ":call vlime#plugin#FindDefinition(vlime#ui#CurAtom())<cr>",
+      { buffer = true, silent = true, desc = "Go to definition" }
+    )
   end,
 })
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true })
@@ -72,3 +80,10 @@ if vim.fn.executable("/usr/bin/taplo") == 1 then
     cmd = { "/usr/bin/taplo", "lsp", "stdio" },
   })
 end
+
+-- read filetype of .gohtml files as html
+vim.filetype.add({
+  extension = {
+    gohtml = "html",
+  },
+})
