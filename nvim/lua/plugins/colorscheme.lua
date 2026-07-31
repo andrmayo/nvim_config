@@ -224,3 +224,13 @@ return {
 --     vim.cmd("colorscheme onenord") -- Replace this with your favorite colorscheme
 --   end
 -- }
+
+-- Lunaperche Theme
+-- return {
+--   {
+--     "LazyVim/LazyVim",
+--     opts = {
+--       colorscheme = "lunaperche",
+--     },
+--   },
+-- }
