@@ -87,3 +87,13 @@ vim.filetype.add({
     gohtml = "html",
   },
 })
+
+-- check if ~/.config/theme/current exists, and if it does use
+-- to choose between light and dark theme
+local theme_file = io.open(vim.fn.expand("~/.config/theme/current"), "r")
+if theme_file then
+  local theme = theme_file:read("*l")
+  if theme == "dark" or theme == "light" then
+    vim.cmd(string.format("set background=%s", theme))
+  end
+end
